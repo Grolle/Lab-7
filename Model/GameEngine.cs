@@ -39,21 +39,21 @@ namespace Lab_7.Model
             _settings = _settings with { Difficulty = difficulty };
         }
 
-        public void GuessWord(string word)
+        public void GuessWord(string input)
         {
-            ProcessInput(word);
+            ProcessInput(input);
             ReevaluateGameContext();
         }
 
         public GameState GetState()
         {
-            return new GameState(_context.Phase, _context.MaskedWord, _context.LivesLeft, _settings, _context.Score);
+            string guessedLetters = string.Concat(_context.GuessedLetters);
+            return new GameState(_context.Phase, _context.MaskedWord, _context.LivesLeft, _settings, _context.Score, guessedLetters);
         }
 
         #region Services
         private void ReevaluateGameContext()
         {
-
             if (_context.LivesLeft > 0)
             {
                 string updatedMaskedWord = "";
@@ -84,41 +84,28 @@ namespace Lab_7.Model
             }
         }
 
-        private void ProcessInput(string word)
+        private void ProcessInput(string input)
         {
-            string scrubbedWord = "";
+            char c = input[0];
 
-            foreach (var c in word)
+            if (_context.RemainingLetters.TryGetValue(c, out int reoccurrences))
             {
-                if (_context.GuessedLetters.Contains(c))
+                if (reoccurrences > 0)
                 {
-                    _context.LivesLeft--;
-                    continue;
-                }
-                scrubbedWord += c;
-            }
-
-            foreach (var c in scrubbedWord)
-            {
-                if (_context.RemainingLetters.TryGetValue(c, out int reoccurrences))
-                {
-                    if (reoccurrences > 0)
-                    {
-                        _context.RemainingLetters[c] = 0;
-                        _context.Score++;
-                    }
-                    else
-                    {
-                        _context.LivesLeft--;
-                    }
+                    _context.RemainingLetters[c] = 0;
+                    _context.Score++;
                 }
                 else
                 {
                     _context.LivesLeft--;
                 }
-
-                _context.GuessedLetters.Add(c);
             }
+            else
+            {
+                _context.LivesLeft--;
+            }      
+
+            _context.GuessedLetters.Add(c);      
         }
         #endregion
     }

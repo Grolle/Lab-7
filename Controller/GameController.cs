@@ -25,38 +25,33 @@ namespace Lab_7.Controller
                     break;
                 }
 
-                System.Console.WriteLine($"Current Score : {state}");
-
-
                 Render(state);
-
-                var input = Console.ReadLine();
-                if (input == null)
-                {
-                    break;
-                }
-
-                HandleInput(input.Trim());
+                HandleInput(state);
             }
         }
 
-        public void HandleInput(string input)
+        public void HandleInput(GameState state)
         {
-            var state = _engine.GetState();
-
+            string input;
             switch (state.Phase)
             {
                 case GamePhase.Settings:
+                    input = _choosingDifficulty
+                        ? UserInput.Read(s => string.IsNullOrEmpty(s) || s == "1" || s == "2" || s == "3", "Please type 1, 2 or 3.")
+                        : UserInput.Read(s => string.IsNullOrEmpty(s) || s == "1" || s == "2", "Please type 1 or 2.");
                     HandleSettingsInput(input);
                     break;
                 case GamePhase.Menu:
+                    input = UserInput.Read(s => s == "1" || s== "2", "Please type 1 or 2.");
                     HandleMenuInput(input);
                     break;
                 case GamePhase.Playing:
+                    input = UserInput.Read(s => s.All(char.IsLetter) && !string.IsNullOrEmpty(s) && s.Length == 1,"Please type only 1 character.");
                     HandlePlayingInput(input);
                     break;
                 case GamePhase.Won:
                 case GamePhase.Lost:
+                    input = UserInput.Read();
                     HandleGameOverInput(input);
                     break;
             }

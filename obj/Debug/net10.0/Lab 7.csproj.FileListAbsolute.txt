@@ -18,3 +18,4 @@ C:\Users\alexg\Documents\school\Lab 7 App med AI-stöd\Lab 7\bin\Debug\net10.0\W
 C:\Users\alexg\Documents\school\Lab 7 App med AI-stöd\Lab 7\bin\Debug\net10.0\Words\sv\easy.txt
 C:\Users\alexg\Documents\school\Lab 7 App med AI-stöd\Lab 7\bin\Debug\net10.0\Words\sv\hard.txt
 C:\Users\alexg\Documents\school\Lab 7 App med AI-stöd\Lab 7\bin\Debug\net10.0\Words\sv\medium.txt
+C:\Users\alexg\Documents\school\Lab 7 App med AI-stöd\Lab 7\obj\Debug\net10.0\Lab 7.sourcelink.json
