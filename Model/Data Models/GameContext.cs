@@ -60,6 +60,16 @@ namespace Lab_7.Model.DataModels
         }
         #endregion
 
+        /// <summary>
+        /// Creates a new game context for a round with the selected word, starting lives,
+        /// start phase and round number. Runs Init to set up masked word and remaining letters.
+        /// </summary>
+        /// <param name="">
+        /// string secretWord is the word to guess this round.
+        /// int livesLeft is the number of lives the player starts with.
+        /// GamePhase phase is the phase the game starts in.
+        /// int currentRound is the current round number.</param>
+        /// <returns></returns>
         public GameContext(string secretWord, int livesLeft, GamePhase phase, int currentRound)
         {
             _secretWord = secretWord;
@@ -75,12 +85,21 @@ namespace Lab_7.Model.DataModels
             Init();
         }
 
+        /// <summary>
+        /// Init function to gather the calls that are needed for context to work
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         private void Init()
         {
             SetupMaskedWord();
             SetupRemainingWord();
         }
-
+        /// <summary>
+        /// Setup masked word string with correct amount of '_'.
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         private void SetupMaskedWord()
         {
             foreach (var c in _secretWord)
@@ -88,7 +107,11 @@ namespace Lab_7.Model.DataModels
                 _maskedWord += '_';
             }
         }
-
+        /// <summary>
+        /// Setup the dictionary where we track remainder of characters not guessed in the selected word.
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
         private void SetupRemainingWord()
         {
             foreach (var c in _secretWord)

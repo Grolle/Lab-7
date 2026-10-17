@@ -14,7 +14,11 @@ namespace Lab_7
     {
         static void Main(string[] args)
         {
-            GameSettings settings = new(Language.Swedish, Difficulty.Medium, 6);
+            GameSettings settings = new(
+                StaticSettings.DefaultLanguage,
+                StaticSettings.DefaultDifficulty,
+                StaticSettings.Lives,
+                StaticSettings.GetLifeScale(StaticSettings.DefaultDifficulty));
 
             string wordsPath = Path.Combine(AppContext.BaseDirectory, "Words");
             WordRepository wordRepository = new(wordsPath);

@@ -8,6 +8,11 @@ namespace Lab_7.View.Services
 {
     public class GameView : IView
     {
+        /// <summary>
+        /// Renders the gameplay screen with the hangman, masked word, current stats and guessed letters.
+        /// </summary>
+        /// <param name="state">GameState state contains the current data to display</param>
+        /// <returns></returns>
         public void Render(GameState state)
         {
             ViewHelpers.ClearScreen();
@@ -25,6 +30,11 @@ namespace Lab_7.View.Services
             Console.WriteLine("Guess a letter and press Enter:");
         }
 
+        /// <summary>
+        /// Formats the masked word by spacing out each character for display.
+        /// </summary>
+        /// <param name="">string maskedWord the masked word to format</param>
+        /// <returns></returns>
         private static string FormatMaskedWord(string maskedWord)
         {
             var sb = new StringBuilder();
@@ -36,6 +46,11 @@ namespace Lab_7.View.Services
             return sb.ToString().TrimEnd();
         }
 
+        /// <summary>
+        /// Formats the guessed letters string in alphabetical order, spaced for display.
+        /// </summary>
+        /// <param name="">string guessedLetters the guessed letters to format</param>
+        /// <returns></returns>
         private static string FormatGuessedLetters(string guessedLetters)
         {
             return string.Join(' ', guessedLetters.OrderBy(c => c));

@@ -8,11 +8,9 @@ namespace Lab_7.Model.Interfaces
         void SetPhase(GamePhase phase);
         void GuessWord(string word);
         GameState GetState();
-
         GameSettings Settings { get; }
         void SetLanguage(Language language);
-        void SetDifficulty(Difficulty difficulty);
-
+        void SetDifficulty(Difficulty difficulty, float lifeScalar);
         void StartRound();
     }
 }

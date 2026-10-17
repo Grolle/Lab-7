@@ -8,8 +8,18 @@ namespace Lab_7.View.Services
     {
         private int _step;
 
+         /// <summary>
+        /// Resets the settings step so the language prompt is shown first.
+         /// </summary>
+        /// <param name=""></param>
+         /// <returns></returns>
         public void Reset() => _step = 0;
 
+        /// <summary>
+        /// Renders the settings screen, stepping through language then difficulty selection.
+        /// </summary>
+        /// <param name="">GameState state contains the current settings to display</param>
+        /// <returns></returns>
         public void Render(GameState state)
         {
             ViewHelpers.ClearScreen();
