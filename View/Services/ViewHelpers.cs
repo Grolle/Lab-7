@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Lab_7.View.Services
 {
@@ -43,7 +44,26 @@ namespace Lab_7.View.Services
         {
             int wrongGuesses = maxLives - lives;
             int frame = Math.Clamp(wrongGuesses, 0, HangmanFrames.Length - 1);
-            Console.WriteLine(HangmanFrames[frame]);
+            WriteCenteredBlock(HangmanFrames[frame]);
+        }
+
+        /// <summary>
+        /// Writes a multi-line block of text horizontally centered in the console window,
+        /// padding every line by the same amount so the block's internal alignment is preserved.
+        /// </summary>
+        /// <param name="">
+        /// string block is the multi-line text to center and write.</param>
+        /// <returns></returns>
+        public static void WriteCenteredBlock(string block)
+        {
+            string[] lines = block.Split('\n');
+            int widest = lines.Max(l => l.Length);
+            int padLeft = Math.Max(0, (Console.WindowWidth - widest) / 2);
+            string padding = new string(' ', padLeft);
+            foreach (string line in lines)
+            {
+                Console.WriteLine(padding + line);
+            }
         }
 
         /// <summary>
