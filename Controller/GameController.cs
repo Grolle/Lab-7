@@ -9,7 +9,6 @@ namespace Lab_7.Controller
     {
         private readonly IGameEngine _engine = engine;
         private readonly ViewRegistry _viewRegistry = viewRegistry;
-        private bool _choosingDifficulty;
 
         /// <summary>
         /// Run the gameplay loop from controller. Routes between view and model. If Phase == quit we just break out of loop and let app quit.
@@ -43,13 +42,13 @@ namespace Lab_7.Controller
             switch (state.Phase)
             {
                 case GamePhase.Settings:
-                    input = _choosingDifficulty
-                        ? UserInput.Read(s => string.IsNullOrEmpty(s) || s == "1" || s == "2" || s == "3", "Please type 1, 2 or 3.")
-                        : UserInput.Read(s => string.IsNullOrEmpty(s) || s == "1" || s == "2", "Please type 1 or 2.");
-                    HandleSettingsInput(input);
+                    input = state.SettingState == SettingState.Language
+                        ? UserInput.Read(s => string.IsNullOrEmpty(s) || s == "1" || s == "2", "Please type 1 or 2.")
+                        : UserInput.Read(s => string.IsNullOrEmpty(s) || s == "1" || s == "2" || s == "3", "Please type 1, 2 or 3.");
+                    HandleSettingsInput(state.SettingState, input);
                     break;
                 case GamePhase.Menu:
-                    input = UserInput.Read(s => s == "1" || s == "2", "Please type 1 or 2.");
+                    input = UserInput.Read(s => s == "1" || s == "2" || s == "3", "Please type 1, 2 or 3.");
                     HandleMenuInput(input);
                     break;
                 case GamePhase.Playing:
@@ -68,18 +67,18 @@ namespace Lab_7.Controller
         /// </summary>
         /// <param name="">string input comes from user input.</param>
         /// <returns></returns>
-        private void HandleSettingsInput(string input)
+        private void HandleSettingsInput(SettingState settingState, string input)
         {
-            if (!_choosingDifficulty)
+            switch (settingState)
             {
-                ApplyLanguage(input);
-                _choosingDifficulty = true;
-            }
-            else
-            {
-                ApplyDifficulty(input);
-                _choosingDifficulty = false;
-                _engine.SetPhase(GamePhase.Menu);
+                case SettingState.Language:
+                    ApplyLanguage(input);
+                    _engine.SetSettingState(SettingState.Difficulty);
+                    break;
+                case SettingState.Difficulty:
+                    ApplyDifficulty(input);
+                    _engine.SetPhase(GamePhase.Menu);
+                    break;
             }
         }
         /// <summary>
@@ -99,6 +98,7 @@ namespace Lab_7.Controller
                     break;
             }
         }
+
         /// <summary>
         /// Applies the difficulty based on user input, if empty string is entered then use default difficulty.
         /// </summary>
@@ -119,6 +119,7 @@ namespace Lab_7.Controller
                     break;
             }
         }
+
         /// <summary>
         /// Takes user input and applies menu action, either start the game or quit app
         /// </summary>
@@ -133,6 +134,10 @@ namespace Lab_7.Controller
                     _engine.SetPhase(GamePhase.Playing);
                     break;
                 case "2":
+                    _engine.SetPhase(GamePhase.Settings);
+                    _engine.SetSettingState(StaticSettings.DefaultSettingState);
+                    break;
+                case "3":
                     _engine.SetPhase(GamePhase.Quit);
                     break;
             }
@@ -147,6 +152,7 @@ namespace Lab_7.Controller
         {
             _engine.GuessWord(input);
         }
+
         /// <summary>
         /// Updates the engine with new GamePhase set to menu.
         /// </summary>

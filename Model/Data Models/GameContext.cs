@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using Lab_7.Model.Enums;
 
 namespace Lab_7.Model.DataModels
@@ -15,6 +16,7 @@ namespace Lab_7.Model.DataModels
         private GamePhase _phase;
         private int _currentRound;
         private int _score;
+        private SettingState _settingState;
         #endregion
 
         #region  properties
@@ -58,6 +60,12 @@ namespace Lab_7.Model.DataModels
             get => _score;
             set => _score = value;
         }
+
+        public SettingState SettingState
+        {
+            get => _settingState;
+            set => _settingState = value;
+        }
         #endregion
 
         /// <summary>
@@ -70,7 +78,8 @@ namespace Lab_7.Model.DataModels
         /// GamePhase phase is the phase the game starts in.
         /// int currentRound is the current round number.</param>
         /// <returns></returns>
-        public GameContext(string secretWord, int livesLeft, GamePhase phase, int currentRound)
+        /// 
+        public GameContext(string secretWord, int livesLeft, GamePhase phase, int currentRound, SettingState settingState)
         {
             _secretWord = secretWord;
             _maskedWord = "";
@@ -81,7 +90,7 @@ namespace Lab_7.Model.DataModels
             _currentRound = currentRound;
             _remainingLetters = [];
             _score = 0;
-
+            _settingState = settingState;
             Init();
         }
 

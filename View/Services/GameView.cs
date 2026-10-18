@@ -55,5 +55,6 @@ namespace Lab_7.View.Services
         {
             return string.Join(' ', guessedLetters.OrderBy(c => c));
         }
+
     }
 }

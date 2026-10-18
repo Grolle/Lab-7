@@ -16,7 +16,9 @@ namespace Lab_7.View.Services
             ViewHelpers.ClearScreen();
             ViewHelpers.WriteCentered("=== Hangman ===");
             ViewHelpers.WriteCentered("1. Play");
-            ViewHelpers.WriteCentered("2. Quit");
+            ViewHelpers.WriteCentered("2. Settings");
+            ViewHelpers.WriteCentered("3. Quit");
         }
+
     }
 }

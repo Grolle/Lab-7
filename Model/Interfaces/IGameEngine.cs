@@ -11,6 +11,7 @@ namespace Lab_7.Model.Interfaces
         GameSettings Settings { get; }
         void SetLanguage(Language language);
         void SetDifficulty(Difficulty difficulty, float lifeScalar);
+        void SetSettingState(SettingState settingState);
         void StartRound();
     }
 }

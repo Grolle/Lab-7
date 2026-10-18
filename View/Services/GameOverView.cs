@@ -24,6 +24,7 @@ namespace Lab_7.View.Services
             Console.WriteLine();
             ViewHelpers.WriteCentered("Press any key to continue...");
         }
+
     }
 }
 

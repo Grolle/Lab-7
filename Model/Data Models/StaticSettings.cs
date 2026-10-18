@@ -17,6 +17,7 @@ namespace Lab_7.Model.DataModels;
     public static float LifeScaleEasy { get; private set; } = 0.25f;
     public static float LifeScaleMedium { get; private set; } = 0.5f;
     public static float LifeScaleHard { get; private set; } = 1.0f;
+    public static SettingState DefaultSettingState { get; private set; } = SettingState.Language;
 
     /// <summary>
     /// Maps scale to difficulty

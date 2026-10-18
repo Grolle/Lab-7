@@ -9,7 +9,7 @@ namespace Lab_7.Model
     {
         private GameSettings _settings = settings;
         private readonly IWordProvider _wordProvider = wordProvider;
-        private GameContext _context = new(string.Empty, settings.Lives, GamePhase.Settings, 1);
+        private GameContext _context = new(string.Empty, settings.Lives, GamePhase.Settings, 1, SettingState.Language);
         private int roundsSinceLastPointDeduction = 0;
 
         public GameSettings Settings => _settings;
@@ -32,7 +32,7 @@ namespace Lab_7.Model
         /// <returns></returns>
         public void SetupGame(string word)
         {
-            _context = new(word, _settings.Lives, GamePhase.Playing, 1);
+            _context = new(word, _settings.Lives, GamePhase.Playing, 1, SettingState.Language);
         }
         /// <summary>
         /// Get updated GamePhase and updates the current gamecontext.
@@ -73,6 +73,12 @@ namespace Lab_7.Model
         /// string input user input for guessing word
         /// </param>
         /// <returns></returns>
+
+        public void SetSettingState(SettingState settingState)
+        {
+            _context.SettingState = settingState;
+        }
+
         public void GuessWord(string input)
         {
             ProcessInput(input);
@@ -86,7 +92,7 @@ namespace Lab_7.Model
         public GameState GetState()
         {
             string guessedLetters = string.Concat(_context.GuessedLetters);
-            return new GameState(_context.Phase, _context.MaskedWord, _context.LivesLeft, _settings, _context.Score, guessedLetters, _context.SecretWord);
+            return new GameState(_context.Phase, _context.MaskedWord, _context.LivesLeft, _settings, _context.Score, guessedLetters, _context.SecretWord, _context.SettingState);
         }
 
         #region Services
@@ -149,7 +155,7 @@ namespace Lab_7.Model
 
             if (_context.RemainingLetters.TryGetValue(c, out int reoccurrences))
             {
-                _context.Score += _context.RemainingLetters[c];
+                _context.Score += reoccurrences;
                 _context.RemainingLetters[c] = 0;
                 ResetRoundsSinceLastDeduction();
             }
